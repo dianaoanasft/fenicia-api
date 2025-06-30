@@ -1,0 +1,25 @@
+spring:
+  config:
+    activate:
+        on-profile: dev
+  application:
+    name: ficapi
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ficapi
+    username: sa
+    password: nimda
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: true
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  security:
+    user:
+      name: admin
+      password: nimda
+jwt:
+  secret-key: KoW5BLVGX4U0Wya8l_x2p2CYcn0ufLD0ew0ja6njkY3nxGMQZaWLA7_ZrTSOkWP8dCC4JH2tuLdLeRMOaCF_hw

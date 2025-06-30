@@ -1,0 +1,62 @@
+<!-- src/main/resources/ficapi-spring.xml -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <alias name="defaulti18NService" alias="i18NService"/>
+    <bean id="defaulti18NService" class="com.fiapi.service.impl.DefaultI18NService">
+        <constructor-arg name="countryRepository" ref="countryRepository"/>
+        <constructor-arg name="currencyRepository" ref="currencyRepository"/>
+        <constructor-arg name="languageRepository" ref="languageRepository"/>
+        <constructor-arg name="regionRepository" ref="regionRepository"/>
+    </bean>
+
+    <alias name="defaultJwtService" alias="jwtService"/>
+    <bean id="defaultJwtService" class="com.fiapi.service.impl.DefaultJwtService"/>
+
+    <alias name="defaultAddressService" alias="addressService"/>
+    <bean id="defaultAddressService" class="com.fiapi.service.impl.DefaultAddressService">
+        <constructor-arg name="addressRepository" ref="addressRepository"/>
+    </bean>
+
+    <alias name="defaultUserService" alias="userService"/>
+    <bean id="defaultUserService" class="com.fiapi.service.impl.DefaultUserService">
+        <constructor-arg name="userRepository" ref="userRepository"/>
+    </bean>
+
+    <bean id="productService"
+          class="com.fiapi.service.impl.DefaultProductService">
+        <constructor-arg name="productRepository" ref="productRepository"/>
+    </bean>
+
+    <bean id="cartCodeGenerator"
+          class="com.fiapi.generator.CartCodeGenerator"/>
+
+    <bean id="orderSimulateService"
+          class="com.fiapi.service.impl.DefaultOrderSimulateService"/>
+
+    <bean id="cartService"
+          class="com.fiapi.service.impl.DefaultCartService">
+        <constructor-arg name="cartRepository" ref="cartRepository"/>
+        <constructor-arg name="orderSimulateService" ref="orderSimulateService"/>
+        <constructor-arg name="cartCodeGenerator" ref="cartCodeGenerator"/>
+    </bean>
+
+    <bean id="paymentMethodService"
+          class="com.fiapi.service.impl.DefaultPaymentMethodService">
+        <constructor-arg name="paymentMethodRepository" ref="paymentMethodRepository"/>
+    </bean>
+
+    <bean id="orderPlacementService"
+          class="com.fiapi.service.impl.DefaultOrderPlacementService">
+        <constructor-arg name="orderRepository" ref="orderRepository"/>
+        <constructor-arg name="cartService" ref="cartService"/>
+    </bean>
+
+    <bean id="orderService"
+          class="com.fiapi.service.impl.DefaultOrderService">
+        <constructor-arg name="orderRepository" ref="orderRepository"/>
+    </bean>
+
+</beans>
