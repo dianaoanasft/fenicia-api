@@ -4,8 +4,6 @@ import com.fiapi.dto.ItemDto;
 import com.fiapi.exception.ConversionException;
 import com.fiapi.model.ItemModel;
 import com.fiapi.populator.base.ModelPopulator;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
