@@ -1,0 +1,316 @@
+<!-- src/main/resources/ficapi-spring.xml -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="ficapi-core-spring.xml"/>
+
+    <!-- Lite Populators -->
+
+    <bean id="languageDtoPopulator" class="com.fiapi.populator.dto.LanguageDtoPopulator"/>
+
+    <bean id="currencyDtoPopulator" class="com.fiapi.populator.dto.CurrencyDtoPopulator"/>
+
+    <bean id="regionDtoPopulator" class="com.fiapi.populator.dto.RegionDtoPopulator"/>
+
+    <bean id="userDetailsPopulator" class="com.fiapi.populator.dto.UserDetailsDtoPopulator">
+        <constructor-arg name="languageDtoConverter" ref="languageDtoConverter"/>
+    </bean>
+
+    <bean id="languageModelPopulator" class="com.fiapi.populator.model.LanguageModelPopulator"/>
+
+    <bean id="currencyModelPopulator" class="com.fiapi.populator.model.CurrencyModelPopulator"/>
+
+    <bean id="regionModelPopulator" class="com.fiapi.populator.model.RegionModelPopulator"/>
+
+    <!-- Lite Converters -->
+
+    <bean id="languageDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.LanguageDto"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="languageDtoPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="currencyDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.CurrencyDto"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="currencyDtoPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="regionDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.RegionDto"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="regionDtoPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="userDetailsDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.UserDetailsDTO"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="userDetailsPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="languageModelConverter" class="com.fiapi.converter.DefaultModelConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.model.LanguageModel"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="languageModelPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="currencyModelConverter" class="com.fiapi.converter.DefaultModelConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.model.CurrencyModel"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="currencyModelPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="regionModelConverter" class="com.fiapi.converter.DefaultModelConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.model.RegionModel"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="regionModelPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- Default Populators -->
+
+    <bean id="countryDtoPopulator" class="com.fiapi.populator.dto.CountryDtoPopulator">
+        <constructor-arg name="currencyDtoConverter" ref="currencyDtoConverter"/>
+        <constructor-arg name="regionDtoConverter" ref="regionDtoConverter"/>
+        <constructor-arg name="languageDtoConverter" ref="languageDtoConverter"/>
+    </bean>
+
+    <bean id="countryModelPopulator" class="com.fiapi.populator.model.CountryModelPopulator">
+        <constructor-arg name="i18NService" ref="i18NService"/>
+    </bean>
+
+    <bean id="addressModelPopulator" class="com.fiapi.populator.model.AddressModelPopulator">
+        <constructor-arg name="i18NService" ref="i18NService"/>
+    </bean>
+
+    <bean id="addressDtoPopulator" class="com.fiapi.populator.dto.AddressDtoPopulator">
+        <constructor-arg name="countryDtoConverter" ref="countryDtoConverter"/>
+        <constructor-arg name="regionDtoConverter" ref="regionDtoConverter"/>
+    </bean>
+
+    <bean id="productDtoPopulator" class="com.fiapi.populator.dto.ProductDtoPopulator"/>
+
+    <bean id="productModelPopulator" class="com.fiapi.populator.model.ProductModelPopulator">
+        <constructor-arg name="i18NService" ref="i18NService"/>
+    </bean>
+
+    <bean id="paymentMethodDtoPopulator" class="com.fiapi.populator.dto.PaymentMethodDtoPopulator"/>
+    <bean id="cartEntryDtoPopulator" class="com.fiapi.populator.dto.CartEntryDtoPopulator">
+        <constructor-arg name="productDtoConverter" ref="productDtoConverter"/>
+    </bean>
+
+    <bean id="cartDtoPopulator" class="com.fiapi.populator.dto.CartDtoPopulator">
+        <constructor-arg name="cartEntryDtoConverter" ref="cartEntryDtoConverter"/>
+        <constructor-arg name="paymentMethodDtoConverter" ref="paymentMethodDtoConverter"/>
+    </bean>
+
+    <bean id="orderEntryDtoPopulator" class="com.fiapi.populator.dto.OrderEntryDtoPopulator">
+        <constructor-arg name="productDtoConverter" ref="productDtoConverter"/>
+    </bean>
+
+    <bean id="orderDtoPopulator" class="com.fiapi.populator.dto.OrderDtoPopulator">
+        <constructor-arg name="addressDtoConverter" ref="addressDtoConverter"/>
+        <constructor-arg name="paymentMethodDtoConverter" ref="paymentMethodDtoConverter"/>
+        <constructor-arg name="orderEntryDtoConverter" ref="orderEntryDtoConverter"/>
+    </bean>
+
+    <!-- Default Converters -->
+
+    <bean id="paymentMethodDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.PaymentMethodDto"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="paymentMethodDtoPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="cartEntryDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.CartEntryDto"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="cartEntryDtoPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="cartDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.CartDto"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="cartDtoPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="countryDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.CountryDto"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="countryDtoPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="countryModelConverter" class="com.fiapi.converter.DefaultModelConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.model.CountryModel"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="countryModelPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="addressModelConverter" class="com.fiapi.converter.DefaultModelConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.model.AddressModel"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="addressModelPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="addressDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.AddressDto"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="addressDtoPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="productDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.ProductDto"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="productDtoPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="productModelConverter" class="com.fiapi.converter.DefaultModelConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.model.ProductModel"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="productModelPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="orderEntryDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.OrderEntryDto"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="orderEntryDtoPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="orderDtoConverter" class="com.fiapi.converter.DefaultDtoConverter">
+        <constructor-arg name="dtoClass" value="com.fiapi.dto.OrderDto"/>
+        <constructor-arg name="populators">
+            <list>
+                <ref bean="orderDtoPopulator"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- Facade -->
+
+    <bean id="countryFacade" class="com.fiapi.facade.impl.DefaultCountryFacade">
+        <constructor-arg name="i18NService" ref="i18NService"/>
+        <constructor-arg name="countryDtoConverter" ref="countryDtoConverter"/>
+        <constructor-arg name="countryModelConverter" ref="countryModelConverter"/>
+    </bean>
+
+    <bean id="regionFacade" class="com.fiapi.facade.impl.DefaultRegionFacade">
+        <constructor-arg name="i18NService" ref="i18NService"/>
+        <constructor-arg name="regionDtoConverter" ref="regionDtoConverter"/>
+        <constructor-arg name="regionModelConverter" ref="regionModelConverter"/>
+    </bean>
+
+    <bean id="languageFacade" class="com.fiapi.facade.impl.DefaultLanguageFacade">
+        <constructor-arg name="i18NService" ref="i18NService"/>
+        <constructor-arg name="languageModelConverter" ref="languageModelConverter"/>
+        <constructor-arg name="languageDtoDtoConverter" ref="languageDtoConverter"/>
+    </bean>
+
+    <bean id="currencyFacade" class="com.fiapi.facade.impl.DefaultCurrencyFacade">
+        <constructor-arg name="i18NService" ref="i18NService"/>
+        <constructor-arg name="currencyModelConverter" ref="currencyModelConverter"/>
+        <constructor-arg name="currencyDtoConverter" ref="currencyDtoConverter"/>
+    </bean>
+
+    <bean id="authenticationFacade" class="com.fiapi.facade.impl.DefaultAuthenticationFacade">
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="passwordEncoder" ref="passwordEncoder"/>
+        <constructor-arg name="jwtService" ref="jwtService"/>
+        <constructor-arg name="authenticationManager" ref="authenticationManager"/>
+    </bean>
+
+    <bean id="addressFacade" class="com.fiapi.facade.impl.DefaultAddressFacade">
+        <constructor-arg name="addressService" ref="addressService"/>
+        <constructor-arg name="addressModelConverter" ref="addressModelConverter"/>
+        <constructor-arg name="addressDtoConverter" ref="addressDtoConverter"/>
+    </bean>
+
+    <bean id="userFacade" class="com.fiapi.facade.impl.DefaultUserFacade">
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="i18NService" ref="i18NService"/>
+        <constructor-arg name="userDetailsDtoConverter" ref="userDetailsDtoConverter"/>
+    </bean>
+
+    <bean id="productFacade" class="com.fiapi.facade.impl.DefaultProductFacade">
+        <constructor-arg name="productService" ref="productService"/>
+        <constructor-arg name="productDtoConverter" ref="productDtoConverter"/>
+        <constructor-arg name="productModelConverter" ref="productModelConverter"/>
+        <constructor-arg name="productModelPopulator" ref="productModelPopulator"/>
+    </bean>
+
+    <bean id="cartFacade" class="com.fiapi.facade.impl.DefaultCartFacade">
+        <constructor-arg name="cartService" ref="cartService"/>
+        <constructor-arg name="cartDtoConverter" ref="cartDtoConverter"/>
+        <constructor-arg name="productService" ref="productService"/>
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="addressService" ref="addressService"/>
+    </bean>
+
+    <bean id="paymentMethodFacade" class="com.fiapi.facade.impl.DefaultPaymentMethodFacade">
+        <constructor-arg name="paymentMethodService" ref="paymentMethodService"/>
+    </bean>
+
+    <bean id="orderPlacementFacade" class="com.fiapi.facade.impl.DefaultOrderPlacementFacade">
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="orderPlacementService" ref="orderPlacementService"/>
+        <constructor-arg name="orderDtoConverter" ref="orderDtoConverter"/>
+    </bean>
+
+    <bean id="orderFacade" class="com.fiapi.facade.impl.DefaultOrderFacade">
+        <constructor-arg name="orderService" ref="orderService"/>
+        <constructor-arg name="orderDtoConverter" ref="orderDtoConverter"/>
+        <constructor-arg name="userService" ref="userService"/>
+    </bean>
+
+</beans>

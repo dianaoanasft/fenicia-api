@@ -1,0 +1,7 @@
+# src/main/resources/application-prod.yml
+spring:
+  config:
+    activate:
+      on-profile: prod
+jwt:
+  secret: your_prod_secret_key_here
