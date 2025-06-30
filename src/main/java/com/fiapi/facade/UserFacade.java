@@ -1,6 +1,5 @@
 package com.fiapi.facade;
 
-import com.fiapi.dto.AddressDto;
 import com.fiapi.dto.UserDetailsDTO;
 import com.fiapi.exception.ModelSaveException;
 import com.fiapi.model.UserModel;

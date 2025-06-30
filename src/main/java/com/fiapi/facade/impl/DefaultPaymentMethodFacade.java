@@ -5,12 +5,18 @@ import com.fiapi.enums.PaymentType;
 import com.fiapi.facade.PaymentMethodFacade;
 import com.fiapi.model.PaymentMethodModel;
 import com.fiapi.service.PaymentMethodService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class DefaultPaymentMethodFacade implements PaymentMethodFacade {
+
+    private static final Logger logger = LoggerFactory.getLogger(DefaultPaymentMethodFacade.class);
+
+    private static final String INVALID = "The given request body is valid.";
 
     private final PaymentMethodService paymentMethodService;
 
@@ -61,16 +67,12 @@ public class DefaultPaymentMethodFacade implements PaymentMethodFacade {
             java.time.LocalDate currentDate = java.time.LocalDate.now();
             boolean valid = !expiryDate.isBefore(currentDate);
             if (valid) {
-                System.out.println("The given request body is valid.");
+                logger.error(INVALID);
             }
             return valid;
         } else if (PaymentType.INVOICE.name().equals(paymentMethodDto.getPaymentType())) {
-            if (paymentMethodDto.getCardNumber() != null || paymentMethodDto.getCardHolderName() != null
-                    || paymentMethodDto.getCardExpiryDate() != null || paymentMethodDto.getCardCVV() != null) {
-                return false;
-            }
-            System.out.println("The given request body is valid.");
-            return true;
+            return paymentMethodDto.getCardNumber() == null && paymentMethodDto.getCardHolderName() == null
+                    && paymentMethodDto.getCardExpiryDate() == null && paymentMethodDto.getCardCVV() == null;
         }
         return false;
     }

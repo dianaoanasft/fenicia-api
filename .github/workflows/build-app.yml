@@ -1,0 +1,28 @@
+name: Build Java App
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+#  workflow_run:
+#    workflows: ["Java CI Run Unit Tests Maven"]
+#    types:
+#      - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build without Tests
+        run: mvn clean install -DskipTests
