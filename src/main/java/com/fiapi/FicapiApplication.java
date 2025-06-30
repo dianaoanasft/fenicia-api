@@ -10,8 +10,6 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource("classpath:ficapi-spring.xml")
 public class FicapiApplication {
 
-    private static final Logger logger = LoggerFactory.getLogger(FicapiApplication.class);
-
     public static void main(String[] args) {
         SpringApplication.run(FicapiApplication.class, args);
     }
