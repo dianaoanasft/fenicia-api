@@ -1,5 +1,6 @@
 package com.fiapi.repository;
 
+import com.fiapi.enums.StatusEnum;
 import com.fiapi.model.ProductModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,6 +32,6 @@ public interface ProductRepository extends JpaRepository<ProductModel, Long> {
     Iterable<ProductModel> findByCountryId(@Param("countryId") String countryId);
 
     @Query("SELECT p FROM ProductModel p WHERE p.code = :code AND p.status = :status")
-    ProductModel findByCodeAndStatus(@Param("code") String code, @Param("status") String status);
+    ProductModel findByCodeAndStatus(@Param("code") String code, @Param("status") StatusEnum status);
 
 }
