@@ -1,5 +1,6 @@
 package com.fiapi.service.impl;
 
+import com.fiapi.enums.StatusEnum;
 import com.fiapi.model.ProductModel;
 import com.fiapi.repository.ProductRepository;
 import com.fiapi.service.ProductService;
@@ -102,7 +103,8 @@ public class DefaultProductService implements ProductService {
 
     @Override
     public Optional<ProductModel> findProductByCodeAndStatus(String code, String status) {
-        final ProductModel product = productRepository.findByCodeAndStatus(code, status);
+        final StatusEnum statusEnum = StatusEnum.valueOf(status);
+        final ProductModel product = productRepository.findByCodeAndStatus(code, statusEnum);
         return Optional.ofNullable(product);
     }
 
